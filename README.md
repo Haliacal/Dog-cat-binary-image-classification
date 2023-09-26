@@ -26,5 +26,5 @@ This is a rice image classifier using the [data](https://www.kaggle.com/datasets
 Since te data is quite simple, only 2 epochs was needed to achieve a good fit which can be seen in the results.
 
 ## Results
-
 ![Results](assets/output.png)
+
