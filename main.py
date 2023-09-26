@@ -16,11 +16,8 @@ class IndianActorClassification:
         self.batch_size = batch_size
 
         # Datset and label paths
-        self.dataset_dir =  pathlib.Path("dataset/Bollywood Actor Images")
-        self.label_dir = pathlib.Path("dataset/List of Actors.txt")
+        self.dataset_dir =  pathlib.Path("Rice_Image_Dataset")
         
-        
-
         # Augumentation function (Helps with overfitting)
         data_augmentation = keras.Sequential([
             layers.RandomFlip("horizontal",
@@ -53,20 +50,15 @@ class IndianActorClassification:
 
         self.model = Sequential([
             data_augmentation,
-            layers.Rescaling(1./255),
-            layers.Conv2D(16, 3, padding='same', activation='relu'),
-            layers.MaxPooling2D(),
-            layers.Conv2D(32, 3, padding='same', activation='relu'),
-            layers.MaxPooling2D(),
-            layers.Conv2D(64, 3, padding='same', activation='relu'),
-            layers.MaxPooling2D(),
-            layers.Conv2D(128, 3, padding='same', activation='relu'),
-            layers.MaxPooling2D(),
-            layers.Conv2D(256, 3, padding='same', activation='relu'),
-            layers.MaxPooling2D(),
+            layers.Rescaling(1./255, input_shape=(img_height, img_width, 3)),
+            layers.Conv2D(8, 3, padding='same', activation='relu'),
             layers.Dropout(0.2),
+            layers.MaxPooling2D(),
+            layers.Conv2D(16, 3, padding='same', activation='relu'),
+            layers.Dropout(0.2),
+            layers.MaxPooling2D(),
             layers.Flatten(),
-            layers.Dense(516, activation='relu'),
+            layers.Dense(32, activation='relu'),
             layers.Dense(num_classes, name="outputs")
         ])
 
@@ -113,6 +105,9 @@ class IndianActorClassification:
         plt.legend(loc='upper right')
         plt.title('Training and Validation Loss')
         plt.show()
+    
+    def save(self):
+        self.model.save("my_model.keras")
 
 def main():
     classModel = IndianActorClassification()
