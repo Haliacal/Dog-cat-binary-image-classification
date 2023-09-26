@@ -1,1 +1,1 @@
-# Dog-cat-image-classification
+# Rice-image-classification
